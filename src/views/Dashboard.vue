@@ -1,13 +1,12 @@
 <template>
   <div>
+    Hello
   </div>
 </template>
 
 <script>
+
 export default {
-  name: "Events"
+  name: "Dashboard",
 };
 </script>
-
-<style>
-</style>
