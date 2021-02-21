@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    searchValue: ""
+    sidebarMenu: true
   },
   mutations: {
-    doSearch(state, payload) {
-      state.searchValue = payload
+    toggleSidebarMenu(state, payload) {
+      state.sidebarMenu = payload
     }
   },
   actions: {

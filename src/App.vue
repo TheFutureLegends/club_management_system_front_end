@@ -1,18 +1,18 @@
 <template>
   <component :is="layout">
-    <router-view />
+    <router-view :layout.sync="layout" />
   </component>
 </template>
 
 <script>
-const defaultLayout = "default";
+const defaultLayout = 'default'
 
 export default {
-  name: "App",
+  name: 'App',
   computed: {
     layout() {
-      return (this.$route.meta.layout || defaultLayout) + "-layout";
+      return (this.$route.meta.layout || defaultLayout) + '-layout'
     },
   },
-};
+}
 </script>

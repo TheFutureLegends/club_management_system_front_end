@@ -1,4 +1,7 @@
-# club_management_system_front_end
+# Club management system frontend
+
+This is a project for RMIT Developer Student Club using Vuejs and [Vuetify](https://vuetifyjs.com/en/) for UI
+<p>&nbsp;</p>
 
 ## Project setup
 ```
