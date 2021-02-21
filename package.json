@@ -1,6 +1,6 @@
 {
-  "name": "club_management_system_front_end",
-  "version": "0.1.0",
+  "name": "club_management_system",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,14 +10,17 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.4.0"
+    "vuetify": "^2.4.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
@@ -41,7 +44,19 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "quotes": [
+        2,
+        "single",
+        {
+          "avoidEscape": true
+        }
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

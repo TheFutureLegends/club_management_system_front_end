@@ -1237,7 +1237,7 @@
   dependencies:
     "@vue/cli-shared-utils" "^4.5.11"
 
-"@vue/cli-plugin-vuex@^4.5.11":
+"@vue/cli-plugin-vuex@^4.5.11", "@vue/cli-plugin-vuex@~4.5.0":
   version "4.5.11"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.5.11.tgz#f6f619bcfb66c86cc45340d73152844635e548bd"
   integrity sha512-JBPeZLubiSHbRkEKDj0tnLiU43AJ3vt6JULn4IKWH1XWZ6MFC8vElaP5/AA4O3Zko5caamDDBq3TRyxdA2ncUQ==
@@ -8110,6 +8110,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vee-validate@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.4.5.tgz#96a456c309f7bdb2cce62c3b554f96d893e9f6ae"
+  integrity sha512-ZEcLqOAZzSkMhDvPcTx0xcwVOijFnMW9J+BA20j+rDmo24T8RCCqVQyRwwrDrcWJZV2dRYl/yYNa2GB6UCoBvg==
+
 vendors@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.4.tgz#e2b800a53e7a29b93506c3cf41100d16c4c4ad8e"
@@ -8219,6 +8224,11 @@ vuetify@^2.4.0:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.4.tgz#529de23b6b0c65ccfd43fe11f0f3a8a0333e68e6"
   integrity sha512-/4+xX9XbcwXBjrtptDxm5S4NXVaVGF8UJ3U7Nk20fl4aM84PGgGyqVCfi8hVa8t1gd+2Wz4FCztbR7JgJcBIQQ==
+
+vuex@^3.4.0:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
+  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
