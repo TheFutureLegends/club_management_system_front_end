@@ -48,7 +48,7 @@ export default {
         return this.$store.state.sidebarMenu
       },
       set(value) {
-        this.$store.commit('toggleSidebarMenu', value)
+        this.$store.commit('TOGGLE_SIDEBAR_MENU', value)
       },
     },
   },

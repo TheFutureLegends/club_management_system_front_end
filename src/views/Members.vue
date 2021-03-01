@@ -34,13 +34,13 @@
             <v-row>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                  v-model="editedMember.fullname"
+                  v-model="editedMember.full_name"
                   label="Full Name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                  v-model="editedMember.studentId"
+                  v-model="editedMember.student_id"
                   label="ID Number"
                 ></v-text-field>
               </v-col>
@@ -57,12 +57,19 @@
             <v-btn color="primary" text @click="close"> Cancel </v-btn>
             <v-btn color="primary" @click="save"> Save </v-btn>
           </v-card-actions>
+          <v-progress-linear
+            :active="loading"
+            class="mt-2"
+            color="primary"
+            indeterminate
+            height="6"
+          ></v-progress-linear>
         </v-card>
       </v-dialog>
       <v-dialog v-model="dialogDelete" width="500px">
         <v-card>
           <v-card-title class="title"
-            >Are you sure you want to delete this item?</v-card-title
+            >Are you sure you want to delete this member?</v-card-title
           >
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -70,18 +77,27 @@
             <v-btn color="primary" @click="deleteMemberConfirm">OK</v-btn>
             <v-spacer></v-spacer>
           </v-card-actions>
+          <v-progress-linear
+            :active="loading"
+            class="mt-2"
+            color="primary"
+            indeterminate
+            height="6"
+          ></v-progress-linear>
         </v-card>
       </v-dialog>
     </base-header>
 
     <v-data-table
       class="elevation-2"
+      :loading="tableLoading"
+      loading-text="Loading... Please wait"
       :headers="headers"
       :items="members"
       :search.sync="search"
     >
-      <template v-slot:[`item.fullname`]="{ item }">
-        <div class="subtitle-2">{{ item.fullname }}</div>
+      <template v-slot:[`item.full_name`]="{ item }">
+        <div class="subtitle-2">{{ item.full_name }}</div>
       </template>
       <template v-slot:[`item.totalKPI`]="{ item }">
         <v-chip :color="getKpiColor(item.totalKPI)" dark>
@@ -100,6 +116,7 @@
 
 <script>
 import BaseHeader from '@/components/BaseHeader'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Members',
@@ -110,22 +127,25 @@ export default {
     dialog: false,
     dialogDelete: false,
     search: '',
-    members: [],
+    loading: false,
+    tableLoading: false,
     editedIndex: -1,
     defaultMember: {
-      fullname: '',
-      studentId: '',
+      id: '',
+      full_name: '',
+      student_id: '',
       role: '',
     },
     editedMember: {
-      fullname: '',
-      studentId: '',
+      id: '',
+      full_name: '',
+      student_id: '',
       role: '',
     },
     headers: [
-      { text: 'Full Name', value: 'fullname' },
+      { text: 'Full Name', value: 'full_name' },
       { text: 'Total KPI', value: 'totalKPI' },
-      { text: 'Student ID', value: 'studentId' },
+      { text: 'Student ID', value: 'student_id' },
       { text: 'Role', value: 'role' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
@@ -142,6 +162,7 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Add New Member' : 'Edit Member'
     },
+    ...mapState('member', ['members']),
   },
   created() {
     this.getMembers()
@@ -153,8 +174,9 @@ export default {
       else return 'red'
     },
     async getMembers() {
-      const { data } = await this.$axios.get('/members')
-      this.members = data
+      this.tableLoading = true
+      await this.$store.dispatch('member/getMembers')
+      this.tableLoading = false
     },
     editMember(member) {
       this.editedIndex = this.members.indexOf(member)
@@ -163,10 +185,11 @@ export default {
     },
     deleteMember(member) {
       this.editedIndex = this.members.indexOf(member)
-      this.editedItem = Object.assign({}, member)
+      this.editedMember = Object.assign({}, member)
       this.dialogDelete = true
     },
     deleteMemberConfirm() {
+      this.$store.dispatch('member/deleteMember', this.editedMember.id)
       this.members.splice(this.editedIndex, 1)
       this.closeDelete()
     },
@@ -184,13 +207,22 @@ export default {
         this.editedIndex = -1
       })
     },
-    save() {
+    async save() {
       if (this.editedIndex > -1) {
+        this.loading = true
+        this.$store.dispatch('member/editMember', {
+          id: this.editedMember.id,
+          member: this.editedMember,
+        })
         Object.assign(this.members[this.editedIndex], this.editedMember)
+        this.loading = false
+        this.close()
       } else {
-        this.members.push(this.editedMember)
+        this.loading = true
+        await this.$store.dispatch('member/addMember', this.editedMember)
+        this.loading = false
+        this.close()
       }
-      this.close()
     },
   },
 }

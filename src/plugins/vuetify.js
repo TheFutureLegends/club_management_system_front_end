@@ -9,7 +9,8 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: colors.indigo
+        primary: colors.indigo,
+        danger: colors.red
       },
     },
   },

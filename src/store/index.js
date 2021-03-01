@@ -1,19 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import * as member from './modules/member'
+import * as notification from './modules/notification'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sidebarMenu: true
+    sidebarMenu: true,
   },
   mutations: {
-    toggleSidebarMenu(state, payload) {
+    TOGGLE_SIDEBAR_MENU(state, payload) {
       state.sidebarMenu = payload
-    }
+    },
   },
-  actions: {
-  },
+  actions: {},
   modules: {
-  }
+    member,
+    notification
+  },
 })
