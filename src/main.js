@@ -6,15 +6,13 @@ import vuetify from './plugins/vuetify'
 import Default from './layouts/Default'
 import Login from './layouts/Login.vue'
 import store from './store'
-import axios from 'axios'
+import VueAxios from './plugins/axios'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
-
-Vue.component('default-layout', Default)
-Vue.component('login-layout', Login)
+Vue.use(VueAxios)
+Vue.component('DefaultLayout', Default)
+Vue.component('LoginLayout', Login)
 
 new Vue({
   router,

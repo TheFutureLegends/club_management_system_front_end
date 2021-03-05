@@ -3,7 +3,7 @@ export const namespaced = true
 export const state = {
   snackbarColor: '',
   snackbar: false,
-  notificationText: '',
+  notificationText: ''
 }
 
 export const mutations = {
@@ -14,11 +14,11 @@ export const mutations = {
     state.snackbar = true
     state.notificationText = payload.text
     state.snackbarColor = payload.color
-  },
+  }
 }
 
 export const actions = {
   addNotification({ commit }, notification) {
     return commit('SET_NOTIFICATION', notification)
-  },
+  }
 }

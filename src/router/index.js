@@ -9,24 +9,25 @@ const routes = [
     name: 'Dashboard',
     component: require('@/views/Dashboard').default,
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
   },
   {
     path: '/events',
     name: 'Events',
     component: () => import(/* webpackChunkName: "events" */ '@/views/Events'),
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
   },
   {
     path: '/members',
     name: 'Members',
-    component: () => import(/* webpackChunkName: "members" */ '@/views/Members'),
+    component: () =>
+      import(/* webpackChunkName: "members" */ '@/views/Members'),
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -34,15 +35,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login'),
     meta: {
       layout: 'login',
-      guest: true,
-    },
-  },
+      guest: true
+    }
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 })
 
 router.beforeEach((to, from, next) => {
