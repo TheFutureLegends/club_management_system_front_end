@@ -59,6 +59,9 @@
           max="2"
           min="-2"
           v-model="kpis.daily_communication"
+          ticks="always"
+          tick-size="6"
+          track-color="primary"
           hide-details
         >
           <template v-slot:append>

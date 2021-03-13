@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="rounded-lg">
-    <v-card-title class="subtitle-1">
+    <v-card-title class="title primary--text bg-primary">
       {{ name }}
     </v-card-title>
     <v-divider />

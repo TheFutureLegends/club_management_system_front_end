@@ -9,6 +9,9 @@ export const mutations = {
   SET_MEMBERS(state, payload) {
     state.members = payload
   },
+  ADD_MEMBER(state, payload) {
+    state.members.push(payload)
+  },
   SET_MEMBER(state, payload) {
     state.member = payload
   }
@@ -18,7 +21,7 @@ export const actions = {
   async getMembers({ state, dispatch, commit }) {
     try {
       if (state.members.length === 0) {
-        const { data } = await this.$axios.get('/members/')
+        const { data } = await this.$axios.get('/members')
         commit('SET_MEMBERS', data)
       }
     } catch (err) {
@@ -38,14 +41,14 @@ export const actions = {
       const member = getters.getMemberById(id)
       commit('SET_MEMBER', member)
     } else {
-      const { data } = await this.$axios.get(`/members/${id}/`)
+      const { data } = await this.$axios.get(`/members/${id}`)
       commit('SET_MEMBER', data)
     }
   },
 
-  async addMember({ state, dispatch }, member) {
-    const { data } = await this.$axios.post('/members/', member)
-    state.members.push(data)
+  async addMember({ dispatch, commit }, member) {
+    const { data } = await this.$axios.post('/members', member)
+    commit('ADD_MEMBER', data)
     dispatch(
       'notification/addNotification',
       {
@@ -57,7 +60,7 @@ export const actions = {
   },
 
   editMember({ dispatch }, { id, member }) {
-    this.$axios.put(`/members/${id}/`, member)
+    this.$axios.put(`/members/${id}`, member)
     dispatch(
       'notification/addNotification',
       {
@@ -69,7 +72,7 @@ export const actions = {
   },
 
   deleteMember({ dispatch }, id) {
-    this.$axios.delete(`/members/${id}/`)
+    this.$axios.delete(`/members/${id}`)
     dispatch(
       'notification/addNotification',
       {

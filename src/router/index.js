@@ -20,6 +20,13 @@ const routes = [
       requiresAuth: true
     }
   },
+  { 
+    path: '/events/:eventname/participants', 
+    component: () => import(/* webpackChunkName: "participants" */ '@/views/Participants'),
+    meta: {
+      requiresAuth: true
+    },
+  },
   {
     path: '/members',
     name: 'Members',
@@ -27,7 +34,7 @@ const routes = [
       import(/* webpackChunkName: "members" */ '@/views/Members'),
     meta: {
       requiresAuth: true
-    }
+    },
   },
   {
     path: '/login',

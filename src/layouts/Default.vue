@@ -1,18 +1,19 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      v-model="sidebarMenu"
-      app
-      clipped
-      floating
-      width="240px"
+        v-model="sidebarMenu"
+        app
+        clipped
+        floating
+        class="elevation-2"
+        width="240px"
     >
       <v-list dense nav>
         <v-list-item-group color="primary">
           <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            :to="item.link"
+              v-for="(item, index) in items"
+              :key="index"
+              :to="item.link"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -23,25 +24,20 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-      <template #append>
-        <div class="pa-2">
-          <v-btn depressed color="primary" block @click="logout">Logout</v-btn>
-        </div>
-      </template>
     </v-navigation-drawer>
-    <v-app-bar app flat clipped-left dark color="primary">
+    <v-app-bar clipped-left app dark color="primary">
       <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu" />
-      <v-toolbar-title>Club Management System</v-toolbar-title>
+      <v-app-bar-title>Club Management System</v-app-bar-title>
     </v-app-bar>
-    <v-main class="indigo lighten-5">
-      <v-container class="pa-6">
+    <v-main class="grey lighten-4">
+      <v-container class="px-6 py-6">
         <slot />
       </v-container>
     </v-main>
     <v-snackbar
-      v-model="snackbar"
-      top
-      :color="$store.state.notification.snackbarColor"
+        v-model="snackbar"
+        top
+        :color="$store.state.notification.snackbarColor"
     >
       {{ $store.state.notification.notificationText }}
       <template #action="{ attrs }">
@@ -56,6 +52,7 @@
 <script>
 export default {
   data: () => ({
+    search: '',
     sidebarMenu: true,
     items: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard', link: '/' },
@@ -72,12 +69,6 @@ export default {
         this.$store.commit('notification/TOGGLE_SNACKBAR', value)
       },
     },
-  },
-  methods: {
-    logout() {
-      localStorage.removeItem('jwt')
-      this.$router.push('/login')
-    },
-  },
+  }
 }
 </script>

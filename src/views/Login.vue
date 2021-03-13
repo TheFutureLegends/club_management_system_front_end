@@ -1,111 +1,78 @@
 <template>
-  <v-row
-    justify="center"
-    class="mt-16"
-  >
-    <v-col
-      cols="12"
-      sm="9"
-      md="5"
-      lg="4"
-    >
-      <v-card>
-        <v-card-title>LOGIN</v-card-title>
-        <validation-observer ref="observer">
-          <v-form @submit.prevent="submit">
-            <v-card-text>
-              <validation-provider
-                v-slot="{ errors }"
-                name="Email"
-                rules="required|email"  
-              >
-                <v-text-field
-                  v-model="email"
-                  :error-messages="errors"
-                  label="Email"
-                  required
-                  outlined
-                />
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                name="Password"
-                rules="required"
-              >
-                <v-text-field
-                  v-model="password"
-                  :error-messages="errors"
-                  label="Password"
-                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                  required
-                  outlined
-                  :type="showPass ? 'text' : 'password'"
-                  @click:append="showPass = !showPass"
-                />
-              </validation-provider>
-              <v-divider class="mt-4" />
-              <v-btn
-                class="primary"
-                type="submit"
-                block
-              >
-                Sign In
-              </v-btn>
-            </v-card-text>
+  <v-row justify="center" align="center">
+    <div style="width:450px">
+      <h1 class="text-center display-1 mb-10">RMIT Developer Club</h1>
+      <v-card class="pa-6">
+        <v-card-title>Account Login</v-card-title>
+        <v-card-text>
+          <v-form ref="form" @submit.prevent="submit">
+            <v-text-field
+                v-model="email"
+                label="Email"
+                required
+                :error-messages="emailErrors"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
+            />
+            <v-text-field
+                v-model="password"
+                label="Password"
+                :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                required
+                :error-messages="passwordErrors"
+                :type="showPass ? 'text' : 'password'"
+                @click:append="showPass = !showPass"
+                @input="$v.password.$touch()"
+                @blur="$v.password.$touch()"
+            />
+            <a>Forgot password ?</a>
+            <v-btn type="submit" class="mt-6" depressed block color="primary">LOGIN</v-btn>
           </v-form>
-        </validation-observer>
+        </v-card-text>
       </v-card>
-    </v-col>
+    </div>
   </v-row>
 </template>
 
 <script>
-import { required, email } from 'vee-validate/dist/rules'
-import {
-  extend,
-  ValidationProvider,
-  setInteractionMode,
-  ValidationObserver,
-} from 'vee-validate'
-
-setInteractionMode('eager')
-
-extend('required', {
-  ...required,
-  message: '{_field_} can not be empty',
-})
-
-extend('email', {
-  ...email,
-  message: 'Email must be valid',
-})
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
-  components: {
-    ValidationProvider,
-    ValidationObserver,
+  mixins: [validationMixin],
+
+  validations: {
+    email: { required, email },
+    password: { required },
   },
+
   data: () => ({
     email: '',
     password: null,
     showPass: false,
   }),
   computed: {
-    params() {
-      return {
-        email: this.email,
-        password: this.password,
-      }
+    emailErrors () {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('E-mail is required')
+      return errors
+    },
+    passwordErrors () {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.required && errors.push('Password is required')
+      return errors
     },
   },
   methods: {
-    async submit() {
-      const valid = await this.$refs.observer.validate()
-      if (valid) {
-        localStorage.setItem('jwt', true)
-        this.$router.push('/')
-      }
-    }
+    submit() {
+      this.$v.$touch()
+      if(this.$v.$error) return // prevent submit if field not valid
+      localStorage.setItem('jwt', true)
+      this.$router.push('/')
+    },
   },
 }
 </script>
